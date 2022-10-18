@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+      cursor: no-drop;
 }
 
 .App-logo {
@@ -26,6 +27,55 @@
 
 .App-link {
   color: #61dafb;
+}
+.err {
+  display: none;
+}
+.bl {
+  display: block;
+}
+#logo1 {
+  width: 34px;
+  position: relative;
+  top: 8px;
+}
+body {
+  color: white;
+  background: black;
+}
+.wrap_err {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+}
+.err_txt {
+  margin: 0;
+}
+.err_block {
+  width: 200px;
+  border-radius: 5px;
+  background-color: #ef2e2e;
+  padding: 5px;
+}
+.main_inp {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background: rgb(240, 240, 240);
+}
+.select_btn {
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  background: rgb(180, 180, 180);
+}
+
+#main_btn {
+  padding: 6px;
+  border-radius: 5px;
+  border: none;
 }
 
 @keyframes App-logo-spin {
