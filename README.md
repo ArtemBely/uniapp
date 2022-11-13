@@ -68,3 +68,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+/*<p style={{ fontWeight: 'bolder' }}>Seznam</p>
+<input type='text' ref={inp} className='main_inp' placeholder="Type the name"/>
+<select className="select_btn" ref={sel}>
+    <option defaultValue disabled>Choose the type</option>
+    <option>Keeper</option>
+    <option>Guarder</option>
+    <option>Defencer</option>
+</select>
+<button onClick={vloz} id="main_btn">Vloz</button>
+  {ret()}
+<div className='err' ref={err}><Error /></div>*/
+
+https://jsonplaceholder.typicode.com/todos
+
+      //{filters && filters.map((item) => <button onClick={item.func}>Filtr</button>)}
+
+      {data.map(row => (
+        <tr>
+            {columns.map((column, index) => (
+                <td style={{ border: "1px solid white" }}>
+                    {row[column.attribute]}
+                </td>
+            ))}
+        </tr>
+      ))}

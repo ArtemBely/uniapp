@@ -1,54 +1,106 @@
 import logo from './logo.svg';
 import './App.css';
 import Main from './components/List/Main';
-import { useState, useRef } from 'react';
+import {Table} from './components/List/Table';
+import {MyTable} from './components/List/MyTable';
+import { useState, useRef, useEffect } from 'react';
 import Error from './components/List/Error';
 let items = [];
 
 function App() {
 
+  const [qty, setQty] = useState([]);
+  const [ct, setCt] = useState(0);
+
+  const fetchData = async() => {
+    const response = await fetch('http://localhost:3004/posts')
+        .then((res) => { return res.json(); })
+        .then((res) => setQty(res))
+        .then((res) => qty.map(item => setCt((prevState) => (prevState + 1))))
+        .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+        fetchData();
+  }, []);
+
   const [it, setItem] = useState([]);
   const [inputValue, setInputValue] = useState();
-  const inp = useRef();
-  const sel = useRef();
-  const err = useRef();
+  const [tr, setTr] = useState(false);
+  const [counter, setCounter] = useState(1);
 
-  const vloz = () => {
-      if(inp.current.value.length < 5) {
-        console.log("Min length is 5");
-        err.current.classList.add('bl');
-      }
-      else {
-        items.push({ title: inp.current.value, description: sel.current.value });
-        setItem([...items]);
-        console.log(items);
-        err.current.classList.remove('bl');
-      }
-  }
+  const [data, setData] = useState({
+    it: '',
+    inputValue: ''
+  });
 
-  const ret = () => {
-      return (
-        <div>
-            {items.map((item, index) =>
-                <Main key={index} title={item.title} description={item.description}/>
-             )}
-         </div>
-      )
+const data1 = [
+    {
+      "userId": 1,
+      "id": 1,
+      "title": "delectus aut autem",
+      "completed": false
+    },
+    {
+      "userId": 2,
+      "id": 2,
+      "title": "another item",
+      "completed": true
+    }
+];
+
+const columns = [
+    {
+        attribute: "title"
+    },
+    {
+        attribute: "id",
+        component: (item) => <button>{item.id}</button>
+    }
+];
+
+const columnsPostsTable = [
+  {
+      attribute: "title"
+  },
+  {
+      attribute: "author"
+  },
+  {
+      attribute: "id",
+      component: (item) => <button>{item.id}</button>
   }
+];
+
+const todosFilter = [
+  {
+    title: "Active",
+    func: (data) => { data1.sort((a, b) => { return a.title - b.title }); }
+  }
+]
+
+const increaseId = () => {
+  if (counter < qty.length) { setCounter((prevState) =>  (prevState + 1 )); }
+}
+
+const reduseId = () => {
+  if (counter > 1) { setCounter((prevState) =>  (prevState - 1 )); }
+}
+
+const node = () => {
+  return(
+    <div>
+          <Table data={data1} columns={columns} filters={todosFilter} />
+          <MyTable baseUri={`http://localhost:3004/posts/` + counter} columns={columnsPostsTable} />
+          <button className='common_btn' onClick={reduseId}>{`<`}</button>
+          <button className='common_btn' onClick={increaseId}>{`>`}</button>
+    </div>
+  )
+}
 
   return (
     <div className="App">
-          <p style={{ fontWeight: 'bolder' }}>Seznam</p>
-          <input type='text' ref={inp} className='main_inp' placeholder="Type the name"/>
-          <select className="select_btn" ref={sel}>
-              <option defaultValue disabled>Choose the type</option>
-              <option>Keeper</option>
-              <option>Guarder</option>
-              <option>Defencer</option>
-          </select>
-          <button onClick={vloz} id="main_btn">Vloz</button>
-            {ret()}
-          <div className='err' ref={err}><Error /></div>
+          {node()}
     </div>
   );
 }
