@@ -1,15 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import Main from './components/List/Main';
-import {Table} from './components/List/Table';
-import {MyTable} from './components/List/MyTable';
+import { Table } from './components/List/Table';
+import { MyTable } from './components/List/MyTable';
+import { About } from './components/List/About';
+import { Info } from './components/List/Info';
 import { useState, useRef, useEffect } from 'react';
 import Error from './components/List/Error';
+
+
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+
 let items = [];
 
 function App() {
 
   const [qty, setQty] = useState([]);
+  const [stav, setStav] = useState([]);
   const [ct, setCt] = useState(0);
 
   const fetchData = async() => {
@@ -22,6 +29,9 @@ function App() {
 
   useEffect(() => {
         fetchData();
+        if(typeof window != "undefined") {
+          setCounter(parseInt(window.location.pathname.split('/').pop()))
+        }
   }, []);
 
   const [it, setItem] = useState([]);
@@ -33,6 +43,33 @@ function App() {
     it: '',
     inputValue: ''
   });
+
+  const deleteOne = () => {
+    return fetch(`http://localhost:3004/posts/${counter}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+  }
+
+  const changeOne = async() => {
+      return await fetch(`http://localhost:3004/posts/${counter}`, {
+        method: "PUT",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(
+            {
+              id: counter,
+              name: "user " + counter,
+              lastname: "lastname " + counter,
+              completed: !qty[counter - 1].completed
+            }
+        )
+      })
+      .then(() => fetchData())
+      .then(res => res.json())
+      .catch(err => console.log(err))
+  }
 
 const data1 = [
     {
@@ -61,10 +98,10 @@ const columns = [
 
 const columnsPostsTable = [
   {
-      attribute: "title"
+      attribute: "name"
   },
   {
-      attribute: "author"
+      attribute: "lastname"
   },
   {
       attribute: "id",
@@ -88,19 +125,31 @@ const reduseId = () => {
 }
 
 const node = () => {
-  return(
-    <div>
-          <Table data={data1} columns={columns} filters={todosFilter} />
-          <MyTable baseUri={`http://localhost:3004/posts/` + counter} columns={columnsPostsTable} />
-          <button className='common_btn' onClick={reduseId}>{`<`}</button>
-          <button className='common_btn' onClick={increaseId}>{`>`}</button>
-    </div>
-  )
+  if(typeof window != "undefined") {
+    return(
+      <div>
+            <MyTable baseUri={`http://localhost:3004/posts/` + counter} columns={columnsPostsTable} deleteOne={changeOne}  />
+            <NavLink to={`/users/${counter - 1}`} className='common_btn' onClick={reduseId}>{`<`}</NavLink>
+            <NavLink to={`/users/${counter + 1}`} className='common_btn' onClick={increaseId}>{`>`}</NavLink>
+            <NavLink to='/hello' style={{ color: "white" }}>About</NavLink>
+            <NavLink to='/details' style={{ color: "white" }}>Details</NavLink>
+            <NavLink to={`/users/${counter}`} style={{ color: "white" }}>Users</NavLink>
+      </div>
+    )
+  }
 }
 
   return (
     <div className="App">
-          {node()}
+
+        <Router>
+                  <Routes>
+                          <Route exact path="/" element={<Info counter={counter}/>} />
+                          <Route path="/users/:id" element={node()} />
+                          <Route path="/hello" element={<About />} />
+                  </Routes>
+        </Router>
+
     </div>
   );
 }

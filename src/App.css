@@ -5,7 +5,10 @@
       justify-content: center;
 }
 .common_btn {
-      margin: 30px;
+  margin: 30px;
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
 }
 .App-logo {
   height: 40vmin;

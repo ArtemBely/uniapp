@@ -2,62 +2,66 @@
   "posts": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "user 1",
+      "lastname": "lastname 1",
+      "completed": false
     },
     {
       "id": 2,
-      "title": "json-server2",
-      "author": "typicode2"
+      "name": "user 2",
+      "lastname": "lastname 2",
+      "completed": true
     },
     {
       "id": 3,
-      "title": "json-server3",
-      "author": "typicode3"
+      "name": "artemka",
+      "lastname": "bely",
+      "completed": true
     },
     {
       "id": 4,
-      "title": "json-server4",
-      "author": "typicode4"
+      "name": "user 4",
+      "lastname": "lastname 4",
+      "completed": false
     },
     {
       "id": 5,
-      "title": "json-server5",
-      "author": "typicode5"
+      "name": "user 5",
+      "lastname": "lastname 5",
+      "completed": false
     },
     {
       "id": 6,
-      "title": "json-server6",
-      "author": "typicode6"
+      "name": "jason",
+      "lastname": "bourn",
+      "completed": false
     },
     {
       "id": 7,
-      "title": "json-server7",
-      "author": "typicode7"
+      "name": "user 7",
+      "lastname": "lastname 7",
+      "completed": false
     },
     {
       "id": 8,
-      "title": "json-server8",
-      "author": "typicode8"
+      "name": "user 8",
+      "lastname": "lastname 8",
+      "completed": false
     },
     {
       "id": 9,
-      "title": "json-server9",
-      "author": "typicode9"
+      "name": "user 9",
+      "lastname": "lastname 9",
+      "completed": false
     },
     {
       "id": 10,
-      "title": "json-server10",
-      "author": "typicode10"
+      "name": "user 10",
+      "lastname": "lastname 10",
+      "completed": false
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
+  "comments": [],
   "profile": {
     "name": "typicode"
   }
